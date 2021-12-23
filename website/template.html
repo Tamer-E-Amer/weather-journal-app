@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather App Journal </title>
+    <!-- Font Awesome link -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <!-- CSS link -->
+    <link rel="stylesheet" href="css/template-style.css">
+
+</head>
+
+<body>
+    <main>
+        <section class="main-container">
+            <!-- header start -->
+            <header class="flex flex-between">
+                <div class="logo flex">
+                    <img src="img/logo.png" alt="logo">
+                    <span>Weather App</span>
+                </div>
+                <div class="user-data flex flex-between">
+                    <span>Welcome: Tamer Amer</span>
+                    <span>E-mail: tameramer1g@gmail.com</span>
+                </div>
+            </header>
+            <!-- header end -->
+            <section class="weather-data-container">
+                <!--form-data start -->
+                <form action="" method="post" class="form-data flex flex-center">
+                    <input type="text" name="zip" id="zip" placeholder="Enter zip code">
+                    <input type="text" name="name" id="name" placeholder="Enter your name">
+                    <input type="text" name="email" id="email" placeholder="Enter your E-mail">
+                    <button type="submit">Get weather</button>
+
+                </form>
+                <!--form-data end -->
+                <!-- city -image start -->
+                <div class="city-image flex flex-center">
+                    <img src="img/dusseldorf.png" alt="dusseldorf" srcset="">
+                </div>
+                <!-- city -image end -->
+                <!-- city-card start -->
+                <div class="city-card flex flex-center">
+                    <div class="card flex flex-center">
+                        <div class="city-data flex flex-center">
+                            <h1>Dusseldorf</h1>
+                            <h2>Germany</h2>
+                            <h3>22/12/2021</h3>
+                        </div>
+                        <div class="temp flex flex-between">
+                            <img src="img/temprature.png" alt="thermometer" srcset="">
+                            <span>11</span>
+                        </div>
+                        <div class="humidity flex flex-between">
+                            <div class="flex flex-around">
+                                <h1>humidity</h1>
+                                <img src="img/humidity.png" alt="humidity" srcset="">
+                            </div>
+                            <h1>70%</h1>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- city-card end -->
+                <div class="weather-data flex flex-around">
+                    <div class="wind-data flex flex-between">
+                        <div class="wind-logo flex flex-center">
+                            <h1>Wind</h1>
+                            <img src="img/wind-turbine.png" alt="" srcset="">
+                        </div>
+                        <div class="wind-title">
+                            <h2>Speed</h2>
+                            <h2>Degree</h2>
+                        </div>
+                        <div class="wind-values">
+                            <h2>25</h2>
+                            <h2>70 deg</h2>
+                        </div>
+                    </div>
+                    <div class="visibility flex flex-between">
+                        <div class="visibility-logo flex flex-center">
+                            <h1>visibility</h1>
+                            <img src="img/visibility.png" alt="" srcset="">
+                        </div>
+
+                        <h2>10000</h2>
+                    </div>
+                </div>
+                <!-- city-card end -->
+                <!-- weather-conclusion start -->
+                <div class="weather-conclusion flex flex-center">
+                    <img src="img/partly-cloudy.svg" alt="" srcset="">
+                    <h1>Partially cloudy</h1>
+                </div>
+                <!-- weather-conclusion end -->
+                <!-- sun-path start -->
+                <div class="sun-path flex flex-center">
+                    <img src="img/path.png" alt="" srcset="">
+                </div>
+                <!-- sun-path end -->
+            </section>
+        </section>
+    </main>
+    <!-- Js Source -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>
