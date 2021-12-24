@@ -1,6 +1,8 @@
 /* Google fonts */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,100;1,600&display=swap');
+
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,100;1,600&display=swap'); */
+
 
 /* variables start */
 
@@ -104,7 +106,7 @@ header {
 /* weather-data-container start */
 
 .weather-data-container {
-    height: auto;
+    height: 90vh;
     width: 100%;
     /* border: 1px solid red; */
     border-radius: 4rem;
@@ -164,8 +166,8 @@ button:hover {
 
 .city-image img {
     grid-area: city-image;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
 }
 
 
@@ -182,6 +184,7 @@ button:hover {
     width: 85%;
     border-radius: 68px;
     background: radial-gradient( rgb(190, 197, 208, 0.6) 10%, rgba(7, 106, 136, 0.6), rgba(3, 39, 54, 0.6));
+    padding: 5rem 0;
 }
 
 .city-data {
@@ -292,17 +295,18 @@ button:hover {
 .weather-conclusion {
     grid-area: weather-conclusion;
     flex-direction: column;
-    height: 120px;
+    height: 150px;
     padding-top: 4rem;
 }
 
 .weather-conclusion img {
-    width: 90px;
-    height: 90px;
+    width: 110px;
+    height: 110px;
 }
 
 .weather-conclusion h1 {
     font-size: 4rem;
+    margin-bottom: 3rem;
 }
 
 
@@ -321,6 +325,7 @@ button:hover {
 }
 
 .sun-path img {
+    padding-top: 1rem;
     width: 90%;
     height: 70px;
 }
@@ -353,6 +358,13 @@ button:hover {
     .temp {
         margin-bottom: 3rem;
     }
+    .weather-conclusion img {
+        width: 90px;
+        height: 90px;
+    }
+    .weather-conclusion h1 {
+        font-size: 3rem;
+    }
 }
 
 @media(max-width:900px) {
@@ -363,15 +375,19 @@ button:hover {
         width: 50px;
         height: 72px;
     }
-    .weather-conclusion img {
-        width: 90px;
-        height: 90px;
-    }
-    .weather-conclusion h1 {
-        font-size: 3rem;
-    }
     header {
         width: 80%;
+    }
+    .city-image img {
+        height: 80%;
+    }
+    /* TODO: adjust the temp and humidity in card */
+    .humidity,
+    .temp {
+        flex-direction: column;
+    }
+    .humidity div {
+        margin-bottom: 3rem;
     }
 }
 
@@ -404,6 +420,13 @@ button:hover {
     }
     .weather-data-container {
         height: auto;
+    }
+    .humidity,
+    .temp {
+        flex-direction: row;
+    }
+    .humidity div {
+        margin-bottom: 1rem;
     }
 }
 
@@ -441,5 +464,18 @@ button:hover {
     }
     .logo {
         margin-bottom: 1rem;
+    }
+    .humidity,
+    .temp {
+        flex-direction: row;
+    }
+    .temp span {
+        font-size: 5rem;
+    }
+    .humidity div {
+        margin-bottom: 1rem;
+    }
+    .humidity h1 {
+        font-size: 2.5rem;
     }
 }
