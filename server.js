@@ -44,7 +44,16 @@ function addData(req, res) {
     newProjectData = {
         date: req.body.date,
         temperature: req.body.temperature,
-        feel: req.body.feel,
+        humidity: req.body.humidity,
+        weatherDesciption: req.body.weatherDesciption,
+        cityName: req.body.cityName,
+        country: req.body.country,
+        visibility: req.body.visibility,
+        userName: req.body.userName,
+        windSpeed: req.body.windSpeed,
+        windDegree: req.body.windDegree,
+        weatherIcon: req.body.weatherIcon,
+        email: req.body.email,
     };
 
     projectData.push(newProjectData);
@@ -63,6 +72,7 @@ app.get('/getalldata', getAllData);
 function getAllData(req, res) {
     //console.log(req);
     res.send(projectData);
+
 }
 
 

@@ -1,111 +1,482 @@
-body{
-    background: #fffff8;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+/* Google fonts */
+
+
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,100;1,600&display=swap'); */
+
+
+/* variables start */
+
+:root {
+    /* radial gradient color */
+    --outer-color: #00364D;
+    --middle-color: #019FCD;
+    --inner-color: #BEC5D0;
+    --input-color: #717171;
+    --yellow: #F7FF00;
 }
 
-#app{
-    display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    /* grid-template-columns:  */
-    height:100vh;
-    background: #f23557;
-    color: #f0d43a;
-    justify-content: center;
-    grid-gap: 1em;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-}
 
-.holder{
+/* variables end */
 
-}
 
-.entry{
-    background: rgba(59, 74, 107, .4);
-}
+/* Global seting start*/
 
-#entryHolder{
-
-}
-
-#date{
-
-}
-
-#temp{
-
-}
-
-#content{
-
-}
-
-.headline {
-
-}
-.title{
-
-}
-
-/*  Basic Styling To Override Default For Basic HTML Elements */
-label{
-    display:block;
-    font-size: 27px;
-}
-
-input{
-    display:block;
-    height: 60px;
-    width: 320px;
-    background:#22b2da;
-    color: #f0d43a;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
-}
-
-button{
-    width: 400px;
-    height: 100px;
-    background: #3b4a6b;
-    color: #f0d43a;
-    font-size: 26px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
-    box-shadow: 2px 4px 5px #444;
-}
-h1{
-    font-size: 36px;
-}
-
-textarea{
-    background:#22b2da;
-    color: #f0d43a;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-}
-/* Reset style for HTML element on active to have no border*/
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    ;
     outline: none;
+    border: none;
+    text-decoration: none;
+    transition: all 0.5s ease-in-out;
 }
-/* Style for Placeholder Text*/
-::placeholder { /* Firefox, Chrome, Opera */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
 
-} 
-  
-:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
+html {
+    font-size: 62.5%;
+}
 
-} 
-  
-::-ms-input-placeholder { /* Microsoft Edge */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #fff;
+    background-image: url('../img/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
-} 
+
+/* Global setting end */
+
+
+/* Utilities start */
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.flex-center {
+    justify-content: center;
+}
+
+.flex-between {
+    justify-content: space-between;
+}
+
+.flex-around {
+    justify-content: space-around;
+}
+
+
+/* Utilities end */
+
+.main-container {
+    width: 90%;
+    margin: auto;
+    padding: 1rem;
+}
+
+header {
+    height: 7rem;
+    width: 65%;
+    padding: 1rem;
+}
+
+.logo img {
+    width: 30px;
+    height: 30px;
+    margin-right: 1rem;
+}
+
+.logo span {
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+.user-data {
+    font-size: 1.4rem;
+}
+
+.user-data span {
+    margin-right: 3rem;
+}
+
+
+/* weather-data-container start */
+
+.weather-data-container {
+    height: 90vh;
+    width: 100%;
+    /* border: 1px solid red; */
+    border-radius: 4rem;
+    margin: auto;
+    background: radial-gradient( rgb(190, 197, 208, 0.6), rgb(1, 159, 205, 0.6), rgb(0, 54, 77, 0.6));
+    /* weather-data-container layout */
+    display: grid;
+    grid-template-areas: /* row-1 */
+    'form-data    city-image           city-card'
+    /* row-2 */
+    'weather-data  weather-conclusion  city-card'
+    /* row-3 */
+    'sun-path      sun-path            city-card';
+    grid-template-columns: 30% 35% 35%;
+    padding: 2rem;
+}
+
+
+/* form-data */
+
+.form-data {
+    grid-area: form-data;
+    flex-direction: column;
+}
+
+input,
+button {
+    width: 240px;
+    height: 35px;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 47px;
+    background-color: #fff;
+    margin-bottom: 1rem;
+    color: var(--input-color);
+    font-size: 1.5rem;
+}
+
+button {
+    background: linear-gradient(0.25turn, #305C77 5%, #3E92BC, #124F67);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #124F67, #3E92BC, #305C77);
+    color: var(--yellow);
+}
+
+
+/* city-image */
+
+.city-image {
+    padding-top: 3rem;
+}
+
+.city-image img {
+    grid-area: city-image;
+    width: 80%;
+    height: 80%;
+}
+
+
+/* city-card */
+
+.city-card {
+    grid-area: city-card;
+    /* border: 1px solid green; */
+}
+
+.city-card .card {
+    flex-direction: column;
+    height: 90%;
+    width: 85%;
+    border-radius: 68px;
+    background: radial-gradient( rgb(190, 197, 208, 0.6) 10%, rgba(7, 106, 136, 0.6), rgba(3, 39, 54, 0.6));
+    padding: 5rem 0;
+}
+
+.city-data {
+    flex-direction: column;
+}
+
+.city-data h1,
+.city-data h2,
+.city-data h3 {
+    margin-bottom: 0.75rem;
+}
+
+.city-data h1 {
+    font-size: 2.5rem;
+}
+
+.city-data h2 {
+    font-size: 1.4rem;
+}
+
+.city-data h3 {
+    font-size: 1.5rem;
+}
+
+.temp {
+    width: 65%;
+    margin-bottom: 2rem;
+}
+
+.temp img {
+    height: 120px;
+    width: 90px;
+}
+
+.temp span {
+    font-size: 9rem;
+    color: var(--yellow);
+    font-weight: bold;
+    margin-left: 2rem;
+}
+
+.temp span sup {
+    font-size: 1rem;
+}
+
+.humidity {
+    width: 65%;
+}
+
+.humidity div {
+    flex-direction: column;
+}
+
+.humidity div h1 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.humidity h1 {
+    font-size: 3rem;
+    color: var(--yellow);
+}
+
+.humidity img {
+    width: 40px;
+    height: 30px;
+}
+
+.weather-data {
+    grid-area: weather-data;
+    height: 150px;
+    flex-direction: column;
+    padding-left: 2rem;
+}
+
+.wind-data {
+    width: 75%;
+    margin-bottom: 1rem;
+}
+
+.wind-logo {
+    flex-direction: column;
+}
+
+.wind-logo h1 {
+    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+}
+
+.visibility {
+    width: 75%;
+}
+
+.visibility-logo {
+    flex-direction: column;
+}
+
+.visibility-logo h1 {
+    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+}
+
+.visibility-logo img {
+    width: 50px;
+    height: 20px;
+}
+
+.weather-conclusion {
+    grid-area: weather-conclusion;
+    flex-direction: column;
+    height: 150px;
+    padding-top: 4rem;
+}
+
+.weather-conclusion img {
+    width: 110px;
+    height: 110px;
+}
+
+.weather-conclusion h1 {
+    font-size: 4rem;
+    margin-bottom: 3rem;
+}
+
+
+/* .weather-data-container div {
+    border: 1px solid red;
+    ;
+} */
+
+.sun-path {
+    grid-area: sun-path;
+    height: 90px;
+    border-top: 1px solid #fff;
+    width: 95%;
+    justify-self: center;
+    margin: 1rem 0;
+}
+
+.sun-path img {
+    padding-top: 1rem;
+    width: 90%;
+    height: 70px;
+}
+
+
+/* weather-data-container end */
+
+
+/* Media Queries */
+
+@media(max-width:1024px) {
+    html {
+        font-size: 55%;
+    }
+    .city-image img {
+        grid-area: city-image;
+        width: 100%;
+        height: 100%;
+    }
+    input,
+    button {
+        width: 85%;
+        height: 25px;
+    }
+    button {
+        color: white;
+        height: 30px;
+    }
+    .city-data,
+    .temp {
+        margin-bottom: 3rem;
+    }
+    .weather-conclusion img {
+        width: 90px;
+        height: 90px;
+    }
+    .weather-conclusion h1 {
+        font-size: 3rem;
+    }
+}
+
+@media(max-width:900px) {
+    html {
+        font-size: 50%;
+    }
+    .city-card .temp img {
+        width: 50px;
+        height: 72px;
+    }
+    header {
+        width: 80%;
+    }
+    .city-image img {
+        height: 80%;
+    }
+    /* TODO: adjust the temp and humidity in card */
+    .humidity,
+    .temp {
+        flex-direction: column;
+    }
+    .humidity div {
+        margin-bottom: 3rem;
+    }
+}
+
+@media(max-width:700px) {
+    header {
+        width: 100%;
+    }
+    .weather-data-container {
+        grid-template-areas: /* row-1 */
+        'form-data              city-image'
+        /*  */
+        'city-card             city-card'
+        /* row-2 */
+        'weather-conclusion     weather-data'
+        /* row-3 */
+        /* row-4 */
+        'sun-path               sun-path'
+        /*  */
+        ;
+        grid-template-columns: 40% 60%;
+    }
+    .city-card {
+        height: 400px;
+    }
+    .city-image {
+        margin-bottom: 1rem;
+    }
+    .sun-path {
+        margin-top: 3rem;
+    }
+    .weather-data-container {
+        height: auto;
+    }
+    .humidity,
+    .temp {
+        flex-direction: row;
+    }
+    .humidity div {
+        margin-bottom: 1rem;
+    }
+}
+
+@media(max-width:600px) {
+    .user-data {
+        flex-direction: column;
+    }
+}
+
+@media(max-width:500px) {
+    .weather-data-container {
+        grid-template-areas: /* row-1 */
+        'form-data '
+        /*  */
+        'city-image'
+        /*  */
+        'city-card'
+        /* row-2 */
+        'weather-conclusion'
+        /* row-3 */
+        'weather-data'
+        /* row-4 */
+        'sun-path '
+        /*  */
+        ;
+        grid-template-columns: 100%;
+    }
+    .weather-conclusion {
+        margin-bottom: 5rem;
+    }
+    header {
+        flex-direction: column;
+        margin-bottom: 3rem;
+        padding-bottom: 9rem;
+    }
+    .logo {
+        margin-bottom: 1rem;
+    }
+    .humidity,
+    .temp {
+        flex-direction: row;
+    }
+    .temp span {
+        font-size: 5rem;
+    }
+    .humidity div {
+        margin-bottom: 1rem;
+    }
+    .humidity h1 {
+        font-size: 2.5rem;
+    }
+}

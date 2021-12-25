@@ -1,39 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Weather Journal</title>
-    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather App Journal </title>
+    <!-- Font Awesome link -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <!-- CSS link -->
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
-    <div id="app">
-        <div class="holder headline">
-            Weather Journal App
-        </div>
-        <div class="holder zip">
-            <label for="zip">Enter Zipcode here</label>
-            <input type="text" id="zip" placeholder="enter zip code here">
-        </div>
-        <div class="holder feel">
-            <label for="feelings">How are you feeling today?</label>
-            <!-- <textarea class="myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea> -->
-            <input type="text" name="feelings" id="feelings">
-            <button id="generate" type="submit"> Generate </button>
-        </div>
-        <div class="holder entry">
-            <div class="title">Most Recent Entry</div>
-            <div id="entryHolder">
-                <div id="date">this is Date</div>
-                <div id="temp">This is temp</div>
-                <div id="content">this is user response</div>
-            </div>
-        </div>
-    </div>
-    <script src="js/app.js" type="text/javascript"></script>
+    <main>
+        <section class="main-container">
+            <!-- header start -->
+            <header class="flex flex-between">
+                <div class="logo flex">
+                    <img src="img/logo.png" alt="logo">
+                    <span>Weather App</span>
+                </div>
+                <div class="user-data flex flex-between">
+                    <span>Welcome: <span id ='showUserName'>--</span> </span>
+                    <span>E-mail: <span id="showEmail"> -- </span> </span>
+                </div>
+            </header>
+            <!-- header end -->
+            <section class="weather-data-container">
+                <!--form-data start -->
+                <!-- TODO: search By city name or zip updating -->
+                <div class="form-data flex flex-center">
+                    <input type="text" name="zip" id="zip" placeholder="Enter zip code">
+                    <input type="text" name="userName" id="userName" placeholder="Enter your name">
+                    <input type="email" name="email" id="email" placeholder="Enter your E-mail">
+                    <button type="submit" id="generate">Get weather</button>
 
+                </div>
+                <!--form-data end -->
+                <!-- city -image start -->
+                <div class="city-image flex flex-center">
+                    <img src="img/dusseldorf.png" alt="dusseldorf" srcset="">
+                </div>
+                <!-- city -image end -->
+                <!-- city-card start -->
+                <div class="city-card flex flex-center">
+                    <div class="card flex flex-center">
+                        <div class="city-data flex flex-center">
+                            <h1 id='cityName'>--</h1>
+                            <h2 id="country">--</h2>
+                            <h3 id="date">--</h3>
+                        </div>
+                        <div class="temp flex flex-between">
+                            <img src="img/temprature.png" alt="thermometer" srcset="">
+                            <span id="temp">--</span>
+                        </div>
+                        <div class="humidity flex flex-between">
+                            <div class="flex flex-around">
+                                <h1>humidity</h1>
+                                <img src="img/humidity.png" alt="humidity" srcset="">
+                            </div>
+                            <h1 id="humidity">--</h1>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- city-card end -->
+                <div class="weather-data flex flex-around">
+                    <div class="wind-data flex flex-between">
+                        <div class="wind-logo flex flex-center">
+                            <h1>Wind</h1>
+                            <img src="img/wind-turbine.png" alt="" srcset="">
+                        </div>
+                        <div class="wind-title">
+                            <h2>Speed</h2>
+                            <h2>Degree</h2>
+                        </div>
+                        <div class="wind-values">
+                            <h2 id="windSpeed">--</h2>
+                            <h2 id="windDegree">--</h2>
+                        </div>
+                    </div>
+                    <div class="visibility flex flex-between">
+                        <div class="visibility-logo flex flex-center">
+                            <h1>visibility</h1>
+                            <img src="img/visibility.png" alt="" srcset="">
+                        </div>
+
+                        <h2 id="visibility">--</h2>
+                    </div>
+                </div>
+                <!-- city-card end -->
+                <!-- weather-conclusion start -->
+                <div class="weather-conclusion flex flex-center" id="weatherConclusion">
+                    <!-- <div id="weatherIcon"></div> -->
+                    <!-- <img src="img/partly-cloudy.svg" alt="" srcset=""> -->
+                    <h1 id="weatherDescription">--</h1>
+                </div>
+                <!-- weather-conclusion end -->
+                <!-- sun-path start -->
+                <div class="sun-path flex flex-center">
+                    <img src="img/path.png" alt="" srcset="">
+                </div>
+                <!-- sun-path end -->
+            </section>
+        </section>
+    </main>
+    <!-- Js Source -->
+    <script src="js/app.js"></script>
 </body>
 
-</textarea>
+</html>

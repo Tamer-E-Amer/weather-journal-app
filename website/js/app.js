@@ -17,18 +17,32 @@ function performAction(e) {
     // console.log('this is the getWeather function');
     // data entery for API
     const zip = document.querySelector('#zip').value;
-    //user response
-    const feel = document.getElementById('feelings').value;
-    console.log("userResponse is", feel);
+    //user name
+    const userName = document.getElementById('userName').value;
+    //email
+    const email = document.getElementById('email').value;
+    console.log("Your name is", userName);
     // send data to API link
     getWeather(watherForcastAPIURL, zip, apiKey)
         .then(function(data) {
             console.log("temp from api", data.main.temp);
+            console.log("weather description is", data.weather[0].description);
+            console.log("city name is", data.name);
             console.log("data from api", data);
-            postData('/addData', {
+
+            postData('http://127.0.0.1:8000/addData', {
                 date: newDate,
                 temperature: data.main.temp,
-                feel: feel,
+                humidity: data.main.humidity,
+                weatherDesciption: data.weather[0].description,
+                cityName: data.name,
+                country: data.sys.country,
+                visibility: data.visibility,
+                windSpeed: data.wind.speed,
+                windDegree: data.wind.deg,
+                weatherIcon: data.weather[0].icon,
+                userName: userName,
+                email: email,
 
             });
             updateUI();
@@ -38,7 +52,8 @@ function performAction(e) {
 }
 
 const getWeather = async(url, zip, key) => {
-    absoluteURL = `${url}${zip}&appid=${key}`;
+    //units=metric this is for celsius // imperial for Fahrenheit and default for Kelvin
+    absoluteURL = `${url}${zip}&units=metric&appid=${key}`;
     //console.log(absoluteURL);
     const response = await fetch(absoluteURL)
     try {
@@ -64,7 +79,6 @@ const postData = async(url = '', data = {}) => {
         },
         body: JSON.stringify(data), // string casting to the data sent to the server 
     });
-    console.log('response in post data is', response);
     try {
         console.log('************************');
         const newData = await response.json();
@@ -77,17 +91,43 @@ const postData = async(url = '', data = {}) => {
 
 // showing data on the page
 const updateUI = async() => {
-    const request = await fetch('/getalldata');
+    const request = await fetch('http://127.0.0.1:8000/getalldata');
 
     try {
         const allData = await request.json();
         console.log("allData on UI", allData);
         console.log("temp for UI", allData[0].temperature);
 
-        // document.getElementById('date').innerHTML = allData.date;
-        // document.getElementById('temp').innerHTML = allData.temperature;
-        document.getElementById('content').innerHTML = allData[0].feel;
+        document.getElementById('date').innerHTML = allData[0].date;
+        document.getElementById('temp').innerHTML = Math.round(allData[0].temperature);
+        document.getElementById('showUserName').innerHTML = allData[0].userName;
+        document.getElementById('humidity').innerHTML = allData[0].humidity;
+        document.getElementById('weatherDescription').innerHTML = allData[0].weatherDesciption;
+        document.getElementById('cityName').innerHTML = allData[0].cityName;
+        document.getElementById('country').innerHTML = allData[0].country;
+        document.getElementById('visibility').innerHTML = allData[0].visibility;
+        document.getElementById('windSpeed').innerHTML = allData[0].windSpeed;
+        document.getElementById('windDegree').innerHTML = allData[0].windDegree;
+        // document.getElementById('weatherIcon').innerHTML = allData[0].weatherIcon;
+        createWeatherIcon(allData[0].weatherIcon);
+        document.getElementById('showEmail').innerHTML = allData[0].email;
     } catch (error) {
         console.log("erros", error);
     }
 };
+
+function createWeatherIcon(icon) {
+
+    if (document.getElementById('geratedIcon')) {
+        document.getElementById('geratedIcon').remove();
+    }
+    const weatherIcon = document.createElement('img');
+
+    // document.getElementById('weatherConclusion').appendChild(weatherIcon);
+    // document.getElementById('weatherConclusion').insertBefore(weatherIcon, document.getElementById('weatherConclusion').childNodes[0]);
+    document.getElementById('weatherDescription').insertAdjacentElement('beforebegin', weatherIcon);
+    weatherIcon.setAttribute('src', `http://openweathermap.org/img/w/${icon}.png`);
+    weatherIcon.setAttribute('id', 'geratedIcon');
+
+
+}
