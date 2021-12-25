@@ -81,7 +81,10 @@ const postData = async(url = '', data = {}) => {
     });
     try {
         console.log('************************');
-        const newData = await response.json();
+        // const newData = await response.json();
+        //test solution
+        //response is already a parsed JSON object so this response.json() is not necessary : we use instead
+        const newData = await response;
         console.log("new data is", newData);
         return newData;
     } catch (error) {

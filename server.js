@@ -55,7 +55,6 @@ function addData(req, res) {
         weatherIcon: req.body.weatherIcon,
         email: req.body.email,
     };
-
     projectData.push(newProjectData);
 
     console.log(projectData);
@@ -64,8 +63,9 @@ function addData(req, res) {
      * when i want to send request to express to add weather data of a city 5 times it hangs. after search i found that is caused by the browser. The browser has a limit for how many requests it will send to the same host at once and beyond that, the requests are queued in the browser until one of the prior requests finishes. 
      *  I need to actually terminate the requests, this is because i am hitting the limit for the number of pending requests you can have
      */
-    res.end(); // request terminate after adding data
-
+    // request terminate after adding data
+    // 
+    res.end();
 
 }
 // get route
