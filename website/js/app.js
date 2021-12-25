@@ -53,6 +53,8 @@ function performAction(e) {
 
 const getWeather = async(url, zip, key) => {
     //units=metric this is for celsius // imperial for Fahrenheit and default for Kelvin
+    //check the input ZIP to search by ZIP or city name
+    (isNaN(zip)) ? url = "https://api.openweathermap.org/data/2.5/weather?q=": url = url;
     absoluteURL = `${url}${zip}&units=metric&appid=${key}`;
     //console.log(absoluteURL);
     const response = await fetch(absoluteURL)
