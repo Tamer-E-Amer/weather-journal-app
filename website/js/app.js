@@ -23,6 +23,9 @@ function performAction(e) {
     const email = document.getElementById('email').value;
     console.log("Your name is", userName);
     // send data to API link
+    // test get city image
+
+    //
     getWeather(watherForcastAPIURL, zip, apiKey)
         .then(function(data) {
             console.log("temp from api", data.main.temp);
@@ -45,12 +48,67 @@ function performAction(e) {
                 email: email,
 
             });
+
             updateUI();
+            getCityImage(zip).then((cityData) => {
+                /**
+                 * TODO: refactoring this function according to the logic
+                 */
+                const imgContainer = document.getElementById('cityImage');
+                if (!cityData.status) {
+                    console.log("status", "ok");
+                    console.log("cityData", cityData);
+                    console.log("image is :", cityData.photos[0].image.mobile);
+
+                    const imgElement = document.createElement('img');
+                    if (document.getElementById('imgPath')) {
+                        document.getElementById('imgPath').remove();
+                    }
+                    if (document.getElementById('noImg')) {
+                        document.getElementById('noImg').remove();
+                    }
+                    document.getElementById('cityImage').appendChild(imgElement);
+
+                    const imgPath = cityData.photos[0].image.mobile;
+                    imgElement.setAttribute('src', imgPath);
+                    imgElement.setAttribute('id', 'imgPath');
+
+
+
+                    // imgContainer.setAttribute('src', imgPath);
+                    // cityData = {};
+                } else {
+                    //imgContainer.setAttribute('src', 'img/dusseldorf.png');
+                    if (document.getElementById('imgPath')) {
+                        document.getElementById('imgPath').remove();
+                    }
+
+                    if (document.getElementById('noImg')) {
+                        document.getElementById('noImg').remove();
+                    }
+
+                    const imgNotFound = document.createElement('h1');
+                    document.getElementById('cityImage').appendChild(imgNotFound);
+                    imgNotFound.setAttribute("id", "noImg");
+                    imgNotFound.innerHTML = "Sorry!! There is no Image for this city";
+                    console.log('status', "404");
+                }
+
+            });
         });
 
 
 }
-
+const getCityImage = async(city) => {
+    imageURL = `https://api.teleport.org/api/urban_areas/slug:${city}/images/`;
+    const imageResponse = await fetch(imageURL)
+    try {
+        cityData = await imageResponse.json();
+        return cityData;
+    } catch (error) {
+        console.log("error", error);
+    }
+}
 const getWeather = async(url, zip, key) => {
     //units=metric this is for celsius // imperial for Fahrenheit and default for Kelvin
     //check the input ZIP to search by ZIP or city name
