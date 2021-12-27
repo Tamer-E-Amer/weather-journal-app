@@ -19,6 +19,7 @@ function performAction(e) {
     const userName = document.getElementById('userName').value;
     //email
     const email = document.getElementById('email').value;
+    const feelings = document.getElementById('feelings').value;
     console.log("Your name is", userName);
     // send data to API link
     // test get city image
@@ -44,6 +45,7 @@ function performAction(e) {
                 weatherIcon: data.weather[0].icon,
                 userName: userName,
                 email: email,
+                feelings: feelings,
             })
 
 
@@ -181,6 +183,7 @@ const updateUI = async() => {
                 'visibility': allData.visibility,
                 'windSpeed': allData.windSpeed,
                 'windDegree': allData.windDegree,
+                'showFeelings': allData.feelings,
             }
             // loop through elements object to show the object key:value on the UI
         for (const key in elements) {

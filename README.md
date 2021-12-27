@@ -6,7 +6,7 @@ The secon project demanded by Udacity
 ## Project Criteria
 The second project in the Scoolarship determines certain criteria to be applied in this project
 - This application should deal with weather API of **Openweather Map**
-- The Application accepts 2 fildes wich are the **zip code of the city we want to search for**, and **the Feelings of the user** and the **date**, which will be handeled automatically
+- The Application accepts 3 fildes wich are the **zip code of the city we want to search for**, **email** and **the Feelings of the user** and the **date**, which will be handeled automatically
 - The Application gets the **temperture** of this city and combines the **zip code** and **user feelings** together and sends them to the server, then stores them as an object in an array.
 - The application returns back all these data from the server again and shows them all on the application Interface.
 

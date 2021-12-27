@@ -44,6 +44,7 @@ function addData(req, res) {
         date: req.body.date,
         userName: req.body.userName,
         email: req.body.email,
+        feelings: req.body.feelings,
         cityName: req.body.cityName,
         country: req.body.country,
         temperature: req.body.temperature,

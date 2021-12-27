@@ -83,7 +83,7 @@ body {
 
 header {
     height: 7rem;
-    width: 65%;
+    width: 80%;
     padding: 1rem;
 }
 
@@ -409,7 +409,7 @@ button:hover {
         height: 72px;
     }
     header {
-        width: 80%;
+        width: 90%;
     }
     .city-image img {
         height: 80%;
@@ -492,7 +492,7 @@ button:hover {
     }
     header {
         flex-direction: column;
-        margin-bottom: 3rem;
+        margin-bottom: 4rem;
         padding-bottom: 9rem;
     }
     .logo {
