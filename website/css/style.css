@@ -45,6 +45,10 @@ body {
     background-repeat: no-repeat;
 }
 
+::placeholder {
+    color: var(--input-color);
+}
+
 
 /* Global setting end */
 
@@ -133,7 +137,8 @@ header {
 }
 
 input,
-button {
+button,
+.error {
     width: 240px;
     height: 35px;
     padding: 1rem;
@@ -143,6 +148,19 @@ button {
     margin-bottom: 1rem;
     color: var(--input-color);
     font-size: 1.5rem;
+}
+
+.error {
+    color: #fff;
+    height: 25px;
+    background-color: red;
+    font-weight: bold;
+    padding: 0 1rem;
+    display: none;
+}
+
+.error.active {
+    display: block;
 }
 
 button {
@@ -360,7 +378,8 @@ button:hover {
         height: 100%;
     }
     input,
-    button {
+    button,
+    .error {
         width: 85%;
         height: 25px;
     }

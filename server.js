@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = [];
+projectData = {};
 // 1- setting Environment and running server start/////
 // Require Express to run server and routes
 const express = require('express');
@@ -40,22 +40,21 @@ app.post('/addData', addData);
  * @param {} res - holds the data from teh server to the client
  */
 function addData(req, res) {
-    projectData = [];
     newProjectData = {
         date: req.body.date,
+        userName: req.body.userName,
+        email: req.body.email,
+        cityName: req.body.cityName,
+        country: req.body.country,
         temperature: req.body.temperature,
         humidity: req.body.humidity,
         weatherDesciption: req.body.weatherDesciption,
-        cityName: req.body.cityName,
-        country: req.body.country,
+        weatherIcon: req.body.weatherIcon,
         visibility: req.body.visibility,
-        userName: req.body.userName,
         windSpeed: req.body.windSpeed,
         windDegree: req.body.windDegree,
-        weatherIcon: req.body.weatherIcon,
-        email: req.body.email,
     };
-    projectData.push(newProjectData);
+    projectData = newProjectData;
 
     console.log(projectData);
     /**

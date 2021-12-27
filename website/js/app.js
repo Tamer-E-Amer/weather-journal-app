@@ -2,11 +2,9 @@
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-// let newDate = `${d.getDay+1}/${d.getMonth}/${d.getFullYear} `;
 // let d = new Date();
 let newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear();
 
-// https://api.openweathermap.org/data/2.5/weather?zip=94040,us&appid=05243c7fd6f466f59ff18ff2ada62d84    // complete API link
 // api  data
 const watherForcastAPIURL = "https://api.openweathermap.org/data/2.5/weather?zip=";
 const apiKey = "05243c7fd6f466f59ff18ff2ada62d84";
@@ -46,59 +44,58 @@ function performAction(e) {
                 weatherIcon: data.weather[0].icon,
                 userName: userName,
                 email: email,
+            })
 
-            });
 
-            updateUI();
-            getCityImage(zip).then((cityData) => {
-                /**
-                 * TODO: refactoring this function according to the logic
-                 */
-                const imgContainer = document.getElementById('cityImage');
-                if (!cityData.status) {
-                    console.log("status", "ok");
-                    console.log("cityData", cityData);
-                    console.log("image is :", cityData.photos[0].image.mobile);
 
-                    const imgElement = document.createElement('img');
-                    if (document.getElementById('imgPath')) {
-                        document.getElementById('imgPath').remove();
+
+        })
+        .then(() => updateUI()
+            .then(
+                getCityImage(zip).then((cityData) => {
+                    //The API return status of 404 only if there is no image
+                    //Test if this status is not exist i.e there is a city image
+                    if (!cityData.status) {
+                        // test if there is a previously created image if so it will be deleted inorder to not concatinate the new created element to the existent one
+                        clearImage(['imgPath', 'noImg']);
+                        //////////////////////////
+
+                        //create img HTML element
+                        const imgElement = document.createElement('img');
+                        //give it an id
+                        imgElement.setAttribute('id', 'imgPath');
+                        // append the created image to its container div
+                        document.getElementById('cityImage').appendChild(imgElement);
+                        //get the image pathe from API
+                        const imgPath = cityData.photos[0].image.mobile;
+                        // set the path to the source
+                        imgElement.setAttribute('src', imgPath);
+
+                    } else {
+                        // test if there is a previously created image if so it will be deleted inorder to not concatinate the new created element to the existent one
+                        clearImage(['imgPath', 'noImg']);
+                        // create header
+                        const imgNotFound = document.createElement('h1');
+                        imgNotFound.setAttribute("id", "noImg");
+                        // add it to the container div
+                        document.getElementById('cityImage').appendChild(imgNotFound);
+                        // set the error message
+                        imgNotFound.innerHTML = "Sorry!! There is no Image for this city";
                     }
-                    if (document.getElementById('noImg')) {
-                        document.getElementById('noImg').remove();
-                    }
-                    document.getElementById('cityImage').appendChild(imgElement);
-
-                    const imgPath = cityData.photos[0].image.mobile;
-                    imgElement.setAttribute('src', imgPath);
-                    imgElement.setAttribute('id', 'imgPath');
-
-
-
-                    // imgContainer.setAttribute('src', imgPath);
-                    // cityData = {};
-                } else {
-                    //imgContainer.setAttribute('src', 'img/dusseldorf.png');
-                    if (document.getElementById('imgPath')) {
-                        document.getElementById('imgPath').remove();
-                    }
-
-                    if (document.getElementById('noImg')) {
-                        document.getElementById('noImg').remove();
-                    }
-
-                    const imgNotFound = document.createElement('h1');
-                    document.getElementById('cityImage').appendChild(imgNotFound);
-                    imgNotFound.setAttribute("id", "noImg");
-                    imgNotFound.innerHTML = "Sorry!! There is no Image for this city";
-                    console.log('status', "404");
-                }
-
-            });
-        });
-
-
+                })
+            ))
 }
+
+const clearImage = (elem = []) => {
+    for (let i = 0; i < elem.length; i++) {
+
+        if (document.getElementById(elem[i])) {
+            document.getElementById(elem[i]).remove();
+            console.log("img deleted", elem[i]);
+        }
+    }
+}
+
 const getCityImage = async(city) => {
     imageURL = `https://api.teleport.org/api/urban_areas/slug:${city}/images/`;
     const imageResponse = await fetch(imageURL)
@@ -119,10 +116,19 @@ const getWeather = async(url, zip, key) => {
     try {
         const data = await response.json();
         // console.log("data from the API:",data);
-        return data;
+        if (data.cod !== 200) {
+            document.getElementById('errorMsg').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('errorMsg').classList.remove('active');
+            }, 1500);
+
+        } else {
+            return data;
+        }
         // console.log(data.list.main.temp);
     } catch (error) {
-        console.log("error", error);
+        console.log("this is error", error);
+        // return error;
     }
 
 }
@@ -159,21 +165,31 @@ const updateUI = async() => {
     try {
         const allData = await request.json();
         console.log("allData on UI", allData);
-        console.log("temp for UI", allData[0].temperature);
+        console.log("temp for UI", allData.temperature);
 
-        document.getElementById('date').innerHTML = allData[0].date;
-        document.getElementById('temp').innerHTML = Math.round(allData[0].temperature);
-        document.getElementById('showUserName').innerHTML = allData[0].userName;
-        document.getElementById('humidity').innerHTML = allData[0].humidity;
-        document.getElementById('weatherDescription').innerHTML = allData[0].weatherDesciption;
-        document.getElementById('cityName').innerHTML = allData[0].cityName;
-        document.getElementById('country').innerHTML = allData[0].country;
-        document.getElementById('visibility').innerHTML = allData[0].visibility;
-        document.getElementById('windSpeed').innerHTML = allData[0].windSpeed;
-        document.getElementById('windDegree').innerHTML = allData[0].windDegree;
-        // document.getElementById('weatherIcon').innerHTML = allData[0].weatherIcon;
-        createWeatherIcon(allData[0].weatherIcon);
-        document.getElementById('showEmail').innerHTML = allData[0].email;
+        // test addign data to the items
+        // collect all elements of the weather data in an Object
+        const elements = {
+                'date': allData.date,
+                'showUserName': allData.userName,
+                'showEmail': allData.email,
+                'cityName': allData.cityName,
+                'country': allData.country,
+                'temp': Math.round(allData.temperature),
+                'humidity': allData.humidity,
+                'weatherDescription': allData.weatherDesciption,
+                'visibility': allData.visibility,
+                'windSpeed': allData.windSpeed,
+                'windDegree': allData.windDegree,
+            }
+            // loop through elements object to show the object key:value on the UI
+        for (const key in elements) {
+            document.getElementById(key).innerHTML = elements[key];
+        }
+
+        //////
+        createWeatherIcon(allData.weatherIcon);
+
     } catch (error) {
         console.log("erros", error);
     }
