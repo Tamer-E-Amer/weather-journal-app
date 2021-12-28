@@ -72,13 +72,11 @@ function addData(req, res) {
 app.get('/getalldata', getAllData);
 /**
  * @description this function will ask the server to send the temperature to the client
- * @param {} //TODO:determine the data type of get request arguments
- * @param {json} res - temperature data returned from the server
+ * @param {string} req - url to get data
+ * @param {promise} res - weather and user input data returned from the server
  */
 function getAllData(req, res) {
-    //console.log(req);
     res.send(projectData);
-
 }
 
 

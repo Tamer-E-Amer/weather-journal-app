@@ -10,9 +10,11 @@ const watherForcastAPIURL = "https://api.openweathermap.org/data/2.5/weather?zip
 const apiKey = "05243c7fd6f466f59ff18ff2ada62d84";
 
 document.querySelector('#generate').addEventListener('click', performAction);
-
+/**
+ * @description This function hold what all happend when we click the get weather button i.e the weather data and city image with many different tests.
+ * @param {object} event
+ */
 function performAction(e) {
-    // console.log('this is the getWeather function');
     // data entery for API
     const zip = document.querySelector('#zip').value;
     //user name
@@ -20,85 +22,83 @@ function performAction(e) {
     //email
     const email = document.getElementById('email').value;
     const feelings = document.getElementById('feelings').value;
-    console.log("Your name is", userName);
     // send data to API link
-    // test get city image
-
-    //
     getWeather(watherForcastAPIURL, zip, apiKey)
         .then(function(data) {
-            console.log("temp from api", data.main.temp);
-            console.log("weather description is", data.weather[0].description);
-            console.log("city name is", data.name);
-            console.log("data from api", data);
-
+            //post form data to the Express Server
             postData('http://127.0.0.1:8000/addData', {
-                date: newDate,
-                temperature: data.main.temp,
-                humidity: data.main.humidity,
-                weatherDesciption: data.weather[0].description,
-                cityName: data.name,
-                country: data.sys.country,
-                visibility: data.visibility,
-                windSpeed: data.wind.speed,
-                windDegree: data.wind.deg,
-                weatherIcon: data.weather[0].icon,
-                userName: userName,
-                email: email,
-                feelings: feelings,
-            })
-
-
-
-
-        })
-        .then(() => updateUI()
-            .then(
-                getCityImage(zip).then((cityData) => {
-                    //The API return status of 404 only if there is no image
-                    //Test if this status is not exist i.e there is a city image
-                    if (!cityData.status) {
-                        // test if there is a previously created image if so it will be deleted inorder to not concatinate the new created element to the existent one
-                        clearImage(['imgPath', 'noImg']);
-                        //////////////////////////
-
-                        //create img HTML element
-                        const imgElement = document.createElement('img');
-                        //give it an id
-                        imgElement.setAttribute('id', 'imgPath');
-                        // append the created image to its container div
-                        document.getElementById('cityImage').appendChild(imgElement);
-                        //get the image pathe from API
-                        const imgPath = cityData.photos[0].image.mobile;
-                        // set the path to the source
-                        imgElement.setAttribute('src', imgPath);
-
-                    } else {
-                        // test if there is a previously created image if so it will be deleted inorder to not concatinate the new created element to the existent one
-                        clearImage(['imgPath', 'noImg']);
-                        // create header
-                        const imgNotFound = document.createElement('h1');
-                        imgNotFound.setAttribute("id", "noImg");
-                        // add it to the container div
-                        document.getElementById('cityImage').appendChild(imgNotFound);
-                        // set the error message
-                        imgNotFound.innerHTML = "Sorry!! There is no Image for this city";
-                    }
+                    date: newDate,
+                    temperature: data.main.temp,
+                    humidity: data.main.humidity,
+                    weatherDesciption: data.weather[0].description,
+                    cityName: data.name,
+                    country: data.sys.country,
+                    visibility: data.visibility,
+                    windSpeed: data.wind.speed,
+                    windDegree: data.wind.deg,
+                    weatherIcon: data.weather[0].icon,
+                    userName: userName,
+                    email: email,
+                    feelings: feelings,
                 })
-            ))
+                // get all data from the server and show it on the UI
+                .then(() => updateUI())
+                // the getCityImage is performed directly after the updateUI in order to not be executed when there is no weather data.
+                .then(
+                    // get the city of the image
+                    getCityImage(zip).then((cityData) => {
+                        //The API return status of 404 only if there is no image
+                        //Test if this status is not exist i.e there is a city image
+                        if (!cityData.status) {
+                            // test if there is a previously created image if so it will be deleted inorder to not concatinate the new created element to the existent one
+                            clearImage(['imgPath', 'noImg']);
+                            //////////////////////////
+
+                            //create img HTML element
+                            const imgElement = document.createElement('img');
+                            //give it an id
+                            imgElement.setAttribute('id', 'imgPath');
+                            // append the created image to its container div
+                            document.getElementById('cityImage').appendChild(imgElement);
+                            //get the image pathe from API
+                            const imgPath = cityData.photos[0].image.mobile;
+                            // set the path to the source
+                            imgElement.setAttribute('src', imgPath);
+
+                        } else {
+                            // test if there is a previously created image if so it will be deleted inorder to not concatinate the new created element to the existent one
+                            clearImage(['imgPath', 'noImg']);
+                            // create header
+                            const imgNotFound = document.createElement('h1');
+                            imgNotFound.setAttribute("id", "noImg");
+                            // add it to the container div
+                            document.getElementById('cityImage').appendChild(imgNotFound);
+                            // set the error message
+                            imgNotFound.innerHTML = "Sorry!! There is no Image for this city";
+                        }
+                    })
+                );
+        });
 }
 
+/**
+ * @description this function aim to clear image city from teh image city div container in order to not concatinate a new image with another previously created one.
+ * @param {array} elem - array of HTML elements that we want to delete i.e: img and H1
+ */
 const clearImage = (elem = []) => {
-    for (let i = 0; i < elem.length; i++) {
-
-        if (document.getElementById(elem[i])) {
-            document.getElementById(elem[i]).remove();
-            console.log("img deleted", elem[i]);
+        //loop through the array
+        for (let i = 0; i < elem.length; i++) {
+            if (document.getElementById(elem[i])) {
+                document.getElementById(elem[i]).remove();
+            }
         }
     }
-}
-
+    /**
+     * @description this function aim to get the image of the city
+     * @param {string} city - city name
+     */
 const getCityImage = async(city) => {
+    // img data API
     imageURL = `https://api.teleport.org/api/urban_areas/slug:${city}/images/`;
     const imageResponse = await fetch(imageURL)
     try {
@@ -108,16 +108,21 @@ const getCityImage = async(city) => {
         console.log("error", error);
     }
 }
+
+/**
+ * @description this function aim to get the weather data from the API
+ * @param {string} watherForcastAPIURL - the URL of the API
+ * @param {string/number} ZIP - ZIP code of teh city or its name
+ * @param {string} key - the developer Key for the API
+ */
 const getWeather = async(url, zip, key) => {
     //units=metric this is for celsius // imperial for Fahrenheit and default for Kelvin
     //check the input ZIP to search by ZIP or city name
     (isNaN(zip)) ? url = "https://api.openweathermap.org/data/2.5/weather?q=": url = url;
     absoluteURL = `${url}${zip}&units=metric&appid=${key}`;
-    //console.log(absoluteURL);
     const response = await fetch(absoluteURL)
     try {
         const data = await response.json();
-        // console.log("data from the API:",data);
         if (data.cod !== 200) {
             document.getElementById('errorMsg').classList.add('active');
             setTimeout(() => {
@@ -127,7 +132,6 @@ const getWeather = async(url, zip, key) => {
         } else {
             return data;
         }
-        // console.log(data.list.main.temp);
     } catch (error) {
         console.log("this is error", error);
         // return error;
@@ -135,10 +139,12 @@ const getWeather = async(url, zip, key) => {
 
 }
 
-//post Data
-
+/**
+ * @description this function aim to add the form data to an object on the server
+ * @param {string} url - path of the add function on the server
+ * @param {object} data - data which is the collection of user data form and weather data that we have from the API
+ */
 const postData = async(url = '', data = {}) => {
-    console.log("data sent to server is", data);
     const response = await fetch(url, {
         method: 'POST',
         credentials: 'same-origin',
@@ -148,28 +154,24 @@ const postData = async(url = '', data = {}) => {
         body: JSON.stringify(data), // string casting to the data sent to the server 
     });
     try {
-        console.log('************************');
         // const newData = await response.json();
-        //test solution
         //response is already a parsed JSON object so this response.json() is not necessary : we use instead
         const newData = await response;
-        console.log("new data is", newData);
         return newData;
     } catch (error) {
         console.log("error", error);
     }
 };
 
-// showing data on the page
+/**
+ * @description this function aim to get the data from the server and then show it on the UI of the Application
+ */
 const updateUI = async() => {
-    const request = await fetch('http://127.0.0.1:8000/getalldata');
+    // get the data from the server
+    const response = await fetch('http://127.0.0.1:8000/getalldata');
 
     try {
-        const allData = await request.json();
-        console.log("allData on UI", allData);
-        console.log("temp for UI", allData.temperature);
-
-        // test addign data to the items
+        const allData = await response.json();
         // collect all elements of the weather data in an Object
         const elements = {
                 'date': allData.date,
@@ -190,7 +192,7 @@ const updateUI = async() => {
             document.getElementById(key).innerHTML = elements[key];
         }
 
-        //////
+        //create and show the icon related to the weather status
         createWeatherIcon(allData.weatherIcon);
 
     } catch (error) {
@@ -198,16 +200,21 @@ const updateUI = async() => {
     }
 };
 
+/**
+ * @description this function aim to create and show the icon related to the weather status
+ * @param {string} icon - the icon code of the weather status returned from the weather API data
+ */
 function createWeatherIcon(icon) {
-
+    // test if there is an img element in the image container : if exist remove it
+    //in order to not concatinate the new icon with the previously created img.
     if (document.getElementById('geratedIcon')) {
         document.getElementById('geratedIcon').remove();
     }
+    //create img element
     const weatherIcon = document.createElement('img');
-
-    // document.getElementById('weatherConclusion').appendChild(weatherIcon);
-    // document.getElementById('weatherConclusion').insertBefore(weatherIcon, document.getElementById('weatherConclusion').childNodes[0]);
+    // add it to the container div i.e:weatherDescription div
     document.getElementById('weatherDescription').insertAdjacentElement('beforebegin', weatherIcon);
+    //setting img attributes
     weatherIcon.setAttribute('src', `http://openweathermap.org/img/w/${icon}.png`);
     weatherIcon.setAttribute('id', 'geratedIcon');
 
